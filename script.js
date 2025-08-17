@@ -403,13 +403,13 @@ function calculateInflation() {
         const userPercentage = parseFloat(input.value) || 0;
         const inflationKey = userLocation === 'rural' ? 'Reported Inflation - Rural' : 'Reported Inflation - Urban';
         const categoryInflation = inflationData[category][inflationKey];
-        const indexKey = userLocation === 'rural' ? 'Rural Sep 2024 Index' : 'Urban Sep 2024 Index';
-        const categoryIndex2024 = inflationData[category][indexKey];
+        const indexKey = userLocation === 'rural' ? 'Rural Jul 2025 Index' : 'Urban Jul 2025 Index';
+        const categoryIndex2025 = inflationData[category][indexKey];
         
         const weightedInflation = (userPercentage / 100) * categoryInflation;
         personalInflation += weightedInflation;
         
-        const inflationSince2012 = ((categoryIndex2024 / 100) - 1) * 100;
+        const inflationSince2012 = ((categoryIndex2025 / 100) - 1) * 100;
         const weightedInflationSince2012 = (userPercentage / 100) * inflationSince2012;
         personalInflationSince2012 += weightedInflationSince2012;
         
@@ -436,7 +436,7 @@ function calculateInflation() {
     const userName = document.getElementById('name').value.trim();
     const personalGreeting = userName ? `<h3>Hello ${userName}!</h3>` : '';
     var text = 'You can also calculate your personal inflation rate at https://kirankashyap.github.io/calculate-your-inflation-india/'
-    const shareText = `My personal #inflation rate at #india is ${personalInflation.toFixed(2)}% for 2023-2024, and ${personalInflationSince2012.toFixed(2)}% since 2012. ${text}`;
+    const shareText = `My personal #inflation rate at #india is ${personalInflation.toFixed(2)}% for 2024-2025, and ${personalInflationSince2012.toFixed(2)}% since 2012. ${text}`;
     const encodedShareText = encodeURIComponent(shareText);
 
     resultDiv.innerHTML = `
@@ -446,10 +446,10 @@ function calculateInflation() {
             <p>Based on your expense distribution and <span class="highlight">${userLocation}</span> location:</p>
             <div class="inflation-result">
                 <div class="inflation-item">
-                    <span class="label">2023-2024 Inflation: </span>
+                    <span class="label">2024-2025 Inflation: </span>
                     <span class="value">${personalInflation.toFixed(2)}%</span>
                 </div>
-                <p class="explanation">This means that in 2024, your expenses are approximately <span class="highlight">${personalInflation.toFixed(2)}%</span> more than in 2023 due to inflation.</p>
+                <p class="explanation">This means that in 2025, your expenses are approximately <span class="highlight">${personalInflation.toFixed(2)}%</span> more than in 2024 due to inflation.</p>
             </div>
             <div class="inflation-result">
                 <div class="inflation-item">
@@ -465,8 +465,8 @@ function calculateInflation() {
                 <tr>
                     <th>Category</th>
                     <th>Your %</th>
-                    <th>2023-2024 Inflation</th>
-                    <th>Weighted 2023-2024</th>
+                    <th>2024-2025 Inflation</th>
+                    <th>Weighted 2024-2025</th>
                     <th>Inflation Since 2012</th>
                     <th>Weighted Since 2012</th>
                 </tr>
@@ -476,8 +476,8 @@ function calculateInflation() {
                     <tr>
                         <td data-label="Category"><span>${detail.category}</span></td>
                         <td data-label="Your %"><span>${detail.userPercentage.toFixed(1)}%</span></td>
-                        <td data-label="2023-2024 Inflation"><span>${detail.categoryInflation.toFixed(2)}%</span></td>
-                        <td data-label="Weighted 2023-2024"><span>${detail.weightedInflation.toFixed(2)}%</span></td>
+                        <td data-label="2024-2025 Inflation"><span>${detail.categoryInflation.toFixed(2)}%</span></td>
+                        <td data-label="Weighted 2024-2025"><span>${detail.weightedInflation.toFixed(2)}%</span></td>
                         <td data-label="Inflation Since 2012"><span>${detail.inflationSince2012}%</span></td>
                         <td data-label="Weighted Since 2012"><span>${detail.weightedInflationSince2012}%</span></td>
                     </tr>
@@ -558,7 +558,7 @@ document.querySelectorAll('input[name="location"]').forEach(radio => {
 });
 
 // Populate inflationData object with CSV data
-inflationData = {
+inflationData2024 = {
     "Cereals and Products": {"Reported Inflation - Rural": 7.11, "Reported Inflation - Urban": 6.34, "Rural Sep 2024 Index": 194.3, "Urban Sep 2024 Index": 192.8},
     "Meat and Fish": {"Reported Inflation - Rural": 2.66, "Reported Inflation - Urban": 2.59, "Rural Sep 2024 Index": 220.2, "Urban Sep 2024 Index": 229.5},
     "Egg": {"Reported Inflation - Rural": 6.55, "Reported Inflation - Urban": 5.97, "Rural Sep 2024 Index": 190.2, "Urban Sep 2024 Index": 195.2},
@@ -583,6 +583,33 @@ inflationData = {
     "Education": {"Reported Inflation - Rural": 3.62, "Reported Inflation - Urban": 3.94, "Rural Sep 2024 Index": 191.6, "Urban Sep 2024 Index": 187.4},
     "Personal care and effects": {"Reported Inflation - Rural": 8.81, "Reported Inflation - Urban": 9.3, "Rural Sep 2024 Index": 201.4, "Urban Sep 2024 Index": 203.4}
 };
+// Populate inflationData object for 2025 using reference-2025.csv
+inflationData = {
+    "Cereals and Products": {"Reported Inflation - Rural": 2.93, "Reported Inflation - Urban": 3.19, "Rural Jul 2025 Index": 197, "Urban Jul 2025 Index": 197.3, "Rural Jul 2024 Index": 191.4, "Urban Jul 2024 Index": 191.2},
+    "Meat and Fish": {"Reported Inflation - Rural": -0.7, "Reported Inflation - Urban": -0.46, "Rural Jul 2025 Index": 225.5, "Urban Jul 2025 Index": 236.3, "Rural Jul 2024 Index": 227.1, "Urban Jul 2024 Index": 237.4},
+    "Egg": {"Reported Inflation - Rural": 2.03, "Reported Inflation - Urban": 2.59, "Rural Jul 2025 Index": 196.4, "Urban Jul 2025 Index": 202.3, "Rural Jul 2024 Index": 192.5, "Urban Jul 2024 Index": 197.2},
+    "Milk and Products": {"Reported Inflation - Rural": 2.59, "Reported Inflation - Urban": 3, "Rural Jul 2025 Index": 190.4, "Urban Jul 2025 Index": 192.2, "Rural Jul 2024 Index": 185.6, "Urban Jul 2024 Index": 186.6},
+    "Oils and fats": {"Reported Inflation - Rural": 21.11, "Reported Inflation - Urban": 15.85, "Rural Jul 2025 Index": 197.9, "Urban Jul 2025 Index": 182, "Rural Jul 2024 Index": 163.4, "Urban Jul 2024 Index": 157.1},
+    "Fruits": {"Reported Inflation - Rural": 15.82, "Reported Inflation - Urban": 12.89, "Rural Jul 2025 Index": 210.1, "Urban Jul 2025 Index": 217.2, "Rural Jul 2024 Index": 181.4, "Urban Jul 2024 Index": 192.4},
+    "Vegetables": {"Reported Inflation - Rural": -21.1, "Reported Inflation - Urban": -20.04, "Rural Jul 2025 Index": 196.3, "Urban Jul 2025 Index": 242.6, "Rural Jul 2024 Index": 248.8, "Urban Jul 2024 Index": 303.4},
+    "Pulses and products": {"Reported Inflation - Rural": -13.57, "Reported Inflation - Urban": -14.13, "Rural Jul 2025 Index": 182.8, "Urban Jul 2025 Index": 187.2, "Rural Jul 2024 Index": 211.5, "Urban Jul 2024 Index": 218},
+    "Sugar and Confectionery": {"Reported Inflation - Rural": 3.3, "Reported Inflation - Urban": 3.1, "Rural Jul 2025 Index": 134.7, "Urban Jul 2025 Index": 136.4, "Rural Jul 2024 Index": 130.4, "Urban Jul 2024 Index": 132.3},
+    "Spices": {"Reported Inflation - Rural": -3.36, "Reported Inflation - Urban": -2.58, "Rural Jul 2025 Index": 221.7, "Urban Jul 2025 Index": 219.2, "Rural Jul 2024 Index": 229.4, "Urban Jul 2024 Index": 225},
+    "Non-alcoholic beverages": {"Reported Inflation - Rural": 4.32, "Reported Inflation - Urban": 4.88, "Rural Jul 2025 Index": 190.9, "Urban Jul 2025 Index": 180.5, "Rural Jul 2024 Index": 183, "Urban Jul 2024 Index": 172.1},
+    "Prepared meals, snacks, sweets etc.": {"Reported Inflation - Rural": 3.9, "Reported Inflation - Urban": 4.92, "Rural Jul 2025 Index": 205.3, "Urban Jul 2025 Index": 217.4, "Rural Jul 2024 Index": 197.6, "Urban Jul 2024 Index": 207.2},
+    "Pan, tobacco and intoxicants": {"Reported Inflation - Rural": 2.47, "Reported Inflation - Urban": 2.35, "Rural Jul 2025 Index": 211.6, "Urban Jul 2025 Index": 217.9, "Rural Jul 2024 Index": 206.5, "Urban Jul 2024 Index": 212.9},
+    "Clothing": {"Reported Inflation - Rural": 2.38, "Reported Inflation - Urban": 2.88, "Rural Jul 2025 Index": 202.2, "Urban Jul 2025 Index": 193, "Rural Jul 2024 Index": 197.5, "Urban Jul 2024 Index": 187.6},
+    "Footwear": {"Reported Inflation - Rural": 1.93, "Reported Inflation - Urban": 2.53, "Rural Jul 2025 Index": 195.5, "Urban Jul 2025 Index": 178.2, "Rural Jul 2024 Index": 191.8, "Urban Jul 2024 Index": 173.8},
+    "Housing": {"Reported Inflation - Rural": 0, "Reported Inflation - Urban": 3.17, "Rural Jul 2025 Index": null, "Urban Jul 2025 Index": 185.7, "Rural Jul 2024 Index": null, "Urban Jul 2024 Index": 180},
+    "Fuel and light": {"Reported Inflation - Rural": 2.22, "Reported Inflation - Urban": 3.36, "Rural Jul 2025 Index": 184, "Urban Jul 2025 Index": 175.2, "Rural Jul 2024 Index": 180, "Urban Jul 2024 Index": 169.5},
+    "Household goods and services": {"Reported Inflation - Rural": 2.22, "Reported Inflation - Urban": 3.02, "Rural Jul 2025 Index": 188.4, "Urban Jul 2025 Index": 180.9, "Rural Jul 2024 Index": 184.3, "Urban Jul 2024 Index": 175.6},
+    "Health": {"Reported Inflation - Rural": 4.53, "Reported Inflation - Urban": 4.65, "Rural Jul 2025 Index": 205.4, "Urban Jul 2025 Index": 200.3, "Rural Jul 2024 Index": 196.5, "Urban Jul 2024 Index": 191.4},
+    "Transport and communication": {"Reported Inflation - Rural": 2.22, "Reported Inflation - Urban": 2, "Rural Jul 2025 Index": 179.4, "Urban Jul 2025 Index": 168.1, "Rural Jul 2024 Index": 175.5, "Urban Jul 2024 Index": 164.8},
+    "Recreation and amusement": {"Reported Inflation - Rural": 2.12, "Reported Inflation - Urban": 2.58, "Rural Jul 2025 Index": 182.8, "Urban Jul 2025 Index": 178.7, "Rural Jul 2024 Index": 179, "Urban Jul 2024 Index": 174.2},
+    "Education": {"Reported Inflation - Rural": 3.2, "Reported Inflation - Urban": 4.59, "Rural Jul 2025 Index": 196.7, "Urban Jul 2025 Index": 193.5, "Rural Jul 2024 Index": 190.6, "Urban Jul 2024 Index": 185},
+    "Personal care and effects": {"Reported Inflation - Rural": 15.02, "Reported Inflation - Urban": 15.2, "Rural Jul 2025 Index": 229.8, "Urban Jul 2025 Index": 231.9, "Rural Jul 2024 Index": 199.8, "Urban Jul 2024 Index": 201.3}
+};
+
 
 // Add this new function to handle showing the modal
 function showItemDetails(category, items) {
